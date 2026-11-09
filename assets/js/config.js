@@ -35,8 +35,35 @@ window.SRF.config = {
     url: 'https://bookings.cloud.microsoft/book/SamuelRusso@indall.onmicrosoft.com/?ismsaljsauthenabled',
     label: 'Prendre rendez-vous',
     // 'newtab' ouvre le calendrier dans un nouvel onglet.
-    // 'embed'  affiche le calendrier dans une fenêtre modale (iframe).
-    mode: 'newtab'
+    // 'embed'  affiche le calendrier dans une fenêtre modale (iframe) : le visiteur
+    //          réserve sans quitter le site. Microsoft Bookings autorise l'intégration
+    //          depuis toute page https (le site en ligne) ; en local (http) le site
+    //          retombe tout seul sur un nouvel onglet. Un lien de secours est affiché
+    //          dans la fenêtre au cas où le calendrier ne se charge pas.
+    mode: 'embed'
+  },
+
+  /* ---------------------------------------------------------------------------
+     PAGES D'AVIS (section Confiance)
+     Laisser '' pour masquer le lien correspondant. Ajouter l'adresse de la
+     fiche Google dès qu'elle est prête (« Voir tous les avis sur Google »).
+     ------------------------------------------------------------------------- */
+  reviews: {
+    facebook: 'https://www.facebook.com/samuelrusso.finance/reviews/?id=61553330466519&sk=reviews',
+    google: ''
+  },
+
+  /* ---------------------------------------------------------------------------
+     CONTENU DE DÉMONSTRATION
+     Les capsules « 1 Minute Finance » (data/capsules.js) et les publications
+     réseaux (data/socials.js) sont des exemples, pas de vraies publications.
+     Tant qu'elles n'ont pas été remplacées par du vrai contenu avec de vrais
+     liens, elles restent masquées sur le site public.
+     Passer à true pour les réafficher une fois les données réelles en place.
+     ------------------------------------------------------------------------- */
+  features: {
+    capsules: false,
+    socialPosts: false
   },
 
   /* ---------------------------------------------------------------------------
@@ -71,11 +98,11 @@ window.SRF.config = {
      Mettre l'URL à '' pour masquer un réseau.
      ------------------------------------------------------------------------- */
   socials: {
-    instagram: 'https://www.instagram.com/samuelrusso.finance/',
     facebook: 'https://www.facebook.com/samuelrusso.finance',
-    tiktok: '',    // non fourni — laissé vide (le lien est masqué automatiquement)
-    linkedin: '',  // non fourni
-    youtube: ''    // non fourni
+    instagram: 'https://www.instagram.com/samuelrusso.finance/',
+    linkedin: 'https://ca.linkedin.com/in/samuel-russo-800089264',
+    tiktok: 'https://www.tiktok.com/@samuel..russo',
+    youtube: 'https://www.youtube.com/@samuelrusso.finance'
   },
 
   /* ---------------------------------------------------------------------------
@@ -115,7 +142,7 @@ window.SRF.config = {
      ------------------------------------------------------------------------- */
   seo: {
     url: 'https://www.samuelrussofinance.ca',
-    ogImage: '/assets/img/og-image.svg'
+    ogImage: '/assets/img/og-image.jpg'
   },
 
   /* ---------------------------------------------------------------------------

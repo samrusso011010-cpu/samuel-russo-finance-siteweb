@@ -83,9 +83,27 @@ window.SRF = window.SRF || {};
         var key = a.getAttribute('data-social');
         var url = c.socials[key];
         if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
-        else { a.style.display = 'none'; }
+        else { (a.closest('[data-social-item]') || a).style.display = 'none'; }
       });
     }
+
+    // Orbite des réseaux : si une URL est vide (réseau masqué), les badges restants
+    // se répartissent à nouveau régulièrement sur le cercle.
+    var orbit = document.querySelector('.orbit');
+    if (orbit) {
+      var shown = [].slice.call(orbit.querySelectorAll('.orbit__item')).filter(function (n) {
+        return n.style.display !== 'none';
+      });
+      orbit.style.setProperty('--n', Math.max(shown.length, 1));
+      shown.forEach(function (n, i) { n.style.setProperty('--i', i); });
+    }
+
+    // Liens « Voir tous les avis » (Facebook / Google) : masqués tant que l'URL est vide.
+    document.querySelectorAll('[data-review-link]').forEach(function (a) {
+      var url = c.reviews && c.reviews[a.getAttribute('data-review-link')];
+      if (url) { a.href = url; a.style.display = ''; }
+      else { a.style.display = 'none'; }
+    });
 
     // Score financier — outil externe, même principe que le calendrier de rendez-vous :
     // une seule URL (config.score.url) reprise par tous les liens du site.

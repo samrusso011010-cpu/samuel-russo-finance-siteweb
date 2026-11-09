@@ -52,7 +52,7 @@ window.SRF = window.SRF || {};
     });
 
     /* --- Ferme le menu si on repasse en desktop --- */
-    var mq = window.matchMedia('(min-width: 861px)');
+    var mq = window.matchMedia('(min-width: 1121px)');
     (mq.addEventListener ? mq.addEventListener('change', h) : mq.addListener(h));
     function h(e) { if (e.matches) setMenu(false); }
 

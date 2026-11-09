@@ -1,0 +1,10 @@
+# Outils de travail local — pas destinés au site en ligne
+.claude/
+serve.ps1
+
+# Fichiers lourds / temporaires
+*.zip
+*.mov
+*.MOV
+Thumbs.db
+.DS_Store

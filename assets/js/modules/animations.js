@@ -170,6 +170,33 @@ window.SRF = window.SRF || {};
     });
   }
 
+  /* --- Vidéos d'ambiance (fond de la section Confiance) ----------------- */
+  // Ne joue que si la section est visible (économie de batterie/données).
+  // Reste sur l'image fixe (poster) si le visiteur a demandé « réduire les
+  // animations » ou activé l'économie de données.
+  function initBgVideo() {
+    var videos = document.querySelectorAll('[data-bg-video]');
+    if (!videos.length) return;
+    var conn = navigator.connection || {};
+    var still = reduced || conn.saveData === true;
+
+    videos.forEach(function (v) {
+      v.muted = true; // requis pour l'autoplay (certains navigateurs lisent l'attribut trop tard)
+      if (still) { v.removeAttribute('autoplay'); v.pause(); return; }
+
+      function play() {
+        var p = v.play();
+        if (p && p.catch) p.catch(function () { /* autoplay refusé (ex. mode économie d'énergie iOS) : le poster reste affiché */ });
+      }
+
+      if (!('IntersectionObserver' in window)) { play(); return; }
+      var io2 = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) play(); else v.pause(); });
+      }, { threshold: 0.05 });
+      io2.observe(v.closest('section') || v);
+    });
+  }
+
   /* --- Horloge « 1 Minute Finance » ----------------------------------- */
   // Compte de 00:00 à 01:00 à l'entrée dans le viewport — un clin d'œil au
   // concept de la marque plutôt qu'un chiffre statique.
@@ -244,6 +271,7 @@ window.SRF = window.SRF || {};
       initHeroZoom();
       initScrollProgress();
       initMagnetic();
+      initBgVideo();
       initClock();
       initCounters();
     },

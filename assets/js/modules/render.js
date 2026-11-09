@@ -21,6 +21,12 @@ window.SRF = window.SRF || {};
     return PLATFORM_LABEL[p] || p;
   }
 
+  // Contenu de démo masquable depuis config.js → features (absent = affiché).
+  function featureOn(key) {
+    var f = SRF.config && SRF.config.features;
+    return !f || f[key] !== false;
+  }
+
   function el(tag, cls, html) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -95,6 +101,7 @@ window.SRF = window.SRF || {};
   /* ---- CAPSULES 1 MINUTE FINANCE --------------------------------------- */
   function renderCapsules() {
     var grid = document.querySelector('[data-capsules-grid]');
+    if (grid && !featureOn('capsules')) { grid.remove(); return; }
     if (!grid || !SRF.capsules) return;
     grid.innerHTML = '';
 
@@ -129,6 +136,7 @@ window.SRF = window.SRF || {};
   /* ---- RÉSEAUX SOCIAUX ------------------------------------------------- */
   function renderSocials() {
     var grid = document.querySelector('[data-socials-grid]');
+    if (grid && !featureOn('socialPosts')) { grid.remove(); return; }
     if (!grid || !SRF.socialPosts) return;
     grid.innerHTML = '';
 
@@ -150,10 +158,72 @@ window.SRF = window.SRF || {};
     if (SRF.animations && SRF.animations.observe) SRF.animations.observe(grid);
   }
 
+  /* ---- EXPÉRIENCES CLIENTS --------------------------------------------- */
+  // Affiche uniquement les témoignages avec consent: true. Aucun témoignage =
+  // aucune grille (la section reste avec ses éléments vérifiables seulement).
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function renderTestimonials() {
+    var wrap = document.querySelector('[data-stories]');
+    var grid = document.querySelector('[data-stories-grid]');
+    var lead = document.querySelector('[data-trust-lead]');
+    if (!wrap || !grid) return;
+
+    // Affiché si publish: true (avis Facebook/Google) ou consent: true (avis direct).
+    var items = (SRF.testimonials || []).filter(function (t) {
+      return t && (t.publish === true || t.consent === true);
+    });
+    if (!items.length) { wrap.hidden = true; return; }
+
+    wrap.hidden = false;
+    if (lead) {
+      lead.setAttribute('data-i18n', 'trust.leadStories');
+      lead.textContent = T('trust.leadStories', lead.textContent);
+    }
+
+    grid.innerHTML = '';
+    var reviewUrls = (SRF.config && SRF.config.reviews) || {};
+    var months = SRF.i18n && SRF.i18n.get() === 'en' ? 'en-CA' : 'fr-CA';
+    items.forEach(function (t) {
+      var card = el('figure', 'story');
+      card.setAttribute('data-reveal', '');
+
+      // Mention de source honnête : plateforme d'origine, ou consentement direct.
+      var src = '';
+      if (t.source === 'facebook' || t.source === 'google') {
+        var label = T(t.source === 'facebook' ? 'trust.srcFacebook' : 'trust.srcGoogle', '');
+        var when = '';
+        if (t.date) {
+          try { when = ' · ' + new Date(t.date + '-01T00:00:00').toLocaleDateString(months, { month: 'long', year: 'numeric' }); }
+          catch (e) {}
+        }
+        var url = reviewUrls[t.source];
+        src = url
+          ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(label) + '</a>' + esc(when)
+          : esc(label + when);
+      } else if (t.consent === true) {
+        src = esc(T('trust.consent', ''));
+      }
+
+      card.innerHTML =
+        '<blockquote class="story__quote">' + esc(L(t.quote)) + '</blockquote>' +
+        '<figcaption class="story__who"><strong>' + esc(t.name) + '</strong>' +
+        (t.context ? '<span>' + esc(L(t.context)) + '</span>' : '') + '</figcaption>' +
+        (src ? '<p class="story__consent">' + src + '</p>' : '');
+      grid.appendChild(card);
+    });
+    if (SRF.animations && SRF.animations.observe) SRF.animations.observe(grid);
+  }
+
   SRF.render = function () {
     renderConcepts();
     renderCapsules();
     renderSocials();
+    renderTestimonials();
   };
 
   // Régénère tout quand la langue change

@@ -194,6 +194,40 @@ h1, h2, h3, h4 {
 .section--about    { background: var(--noir); border-top: 1px solid var(--ligne); }
 .section--concepts { background: var(--noir); border-top: 1px solid var(--ligne); }
 .section--social    { background: var(--anthracite); border-top: 1px solid var(--ligne); }
+.section--trust     { background: var(--noir); border-top: 1px solid var(--ligne); }
+
+/* Section Confiance : vidéo d'ambiance plein cadre derrière le contenu.
+   Un voile noir (74 %) garantit la lisibilité même sur les passages clairs de la
+   vidéo (ciel, jet d'eau) ; les bords fondent dans le noir des sections voisines. */
+/* La vidéo reste « collée » à l'écran pendant qu'on défile dans la section (sticky),
+   au lieu de s'étirer sur toute la hauteur : sur mobile la section est très haute et
+   une vidéo étirée serait agrandie et floue. Pas d'overflow:hidden ici (il casserait sticky). */
+.section--video { position: relative; isolation: isolate; }
+.trust__bg { position: absolute; inset: 0; z-index: 0; background: var(--noir); }
+.trust__video {
+  position: sticky;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  height: min(100vh, 100%);
+  height: min(100svh, 100%);
+  object-fit: cover;
+  object-position: 50% 46%;
+}
+.trust__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, var(--noir) 0%, rgba(10,10,11,0) 14%, rgba(10,10,11,0) 86%, var(--noir) 100%),
+    rgba(10, 10, 11, 0.74);
+}
+.trust__inner { position: relative; z-index: 1; }
+/* Les petits libellés posés directement sur la vidéo passent en « doux » (contraste) */
+.section--video .overline,
+.section--video .stories__title,
+.section--video .cred__label { color: var(--blanc-doux); }
 
 /* Sections claires — blanc cassé, texte encre, coupure nette (pas de
    liseré : le saut de valeur est la rupture). Les blocs sombres imbriqués
@@ -510,21 +544,30 @@ body.menu-open .nav__overlay a {
   inset: 0;
   z-index: 0;
 }
+/* Portrait posé à droite du titre : l'image occupe la moitié droite du hero et
+   se fond dans le noir côté texte (dégradés ci-dessous). */
 .hero__media img,
 .hero__media video {
-  width: 100%;
-  height: 120%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(56%, 940px);
+  height: 118%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: 50% 12%;
   will-change: transform;
+  /* Fondu du bord gauche de la photo directement dans l'image : pas de
+     jointure visible, quelle que soit la largeur de l'écran. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 16%, #000 40%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 16%, #000 40%);
 }
 .hero__media::after {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to top, var(--noir) 4%, rgba(10,10,11,0.55) 45%, rgba(10,10,11,0.72) 100%),
-    linear-gradient(to right, rgba(10,10,11,0.88), rgba(10,10,11,0.35) 70%);
+    linear-gradient(to top, var(--noir) 2%, rgba(10,10,11,0) 36%),
+    linear-gradient(to right, var(--noir) 0%, var(--noir) 30%, rgba(10,10,11,0.4) 52%, rgba(10,10,11,0) 78%);
 }
 .hero__inner {
   position: relative;
@@ -1044,6 +1087,132 @@ body.menu-open .nav__overlay a {
 }
 .social-card__caption { font-size: var(--fs-small); color: var(--blanc); line-height: 1.35; }
 
+/* RÉSEAUX — fond blanc, cinq badges aux couleurs des marques qui tournent en
+   cercle dans le sens horaire. Chaque badge est recentré (contre-rotation) pour
+   rester droit ; pause au survol pour pouvoir cliquer. */
+/* Ligne foncée en tête de section : sépare nettement ce fond blanc de la section
+   Infolettre (blanc cassé) qui précède. */
+.section--white { background: #FFFFFF; border-top: 3px solid var(--noir); }
+.reseaux__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+.reseaux__text { display: flex; flex-direction: column; gap: 1.4rem; max-width: 30ch; }
+
+.orbit {
+  --size: min(86vw, 480px);
+  --badge: clamp(58px, 14vw, 80px);
+  --r: calc(var(--size) / 2 - var(--badge) / 2);
+  --n: 5;
+  --spin: 54s;
+  position: relative;
+  width: var(--size);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+.orbit__ring {
+  position: absolute;
+  inset: 0;
+  animation: orbit-spin var(--spin) linear infinite;
+}
+.orbit__track {
+  position: absolute;
+  inset: calc(var(--badge) / 2);
+  border-radius: 50%;
+  border: 1px dashed rgba(10, 10, 11, 0.18);
+}
+.orbit__item {
+  --a: calc(var(--i) * 360deg / var(--n));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--badge);
+  height: var(--badge);
+  margin: calc(var(--badge) / -2) 0 0 calc(var(--badge) / -2);
+  transform: rotate(var(--a)) translateY(calc(var(--r) * -1)) rotate(calc(var(--a) * -1));
+}
+.orbit__upright {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: orbit-spin var(--spin) linear infinite reverse;
+}
+.orbit__badge {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: 0 10px 24px -10px rgba(10, 10, 11, 0.45);
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+}
+.orbit__badge svg { width: 46%; height: 46%; }
+.orbit__badge--facebook  { background: #1877F2; }
+.orbit__badge--instagram { background: radial-gradient(circle at 30% 107%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%); }
+.orbit__badge--linkedin  { background: #0A66C2; }
+.orbit__badge--youtube   { background: #FF0000; }
+.orbit__badge--youtube svg { width: 52%; height: 52%; }
+.orbit__badge--tiktok    { background: #010101; }
+.orbit__badge--tiktok svg {
+  filter: drop-shadow(1.6px 1.6px 0 #25F4EE) drop-shadow(-1.6px -1.6px 0 #FE2C55);
+}
+.orbit__label {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translate(-50%, -4px);
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: var(--noir);
+  color: var(--blanc);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.orbit__item:hover .orbit__badge,
+.orbit__item:focus-visible .orbit__badge { transform: scale(1.18); box-shadow: 0 16px 30px -10px rgba(10, 10, 11, 0.55); }
+.orbit__item:hover .orbit__label,
+.orbit__item:focus-visible .orbit__label { opacity: 1; transform: translate(-50%, 0); }
+.orbit:hover .orbit__ring,
+.orbit:hover .orbit__upright,
+.orbit:focus-within .orbit__ring,
+.orbit:focus-within .orbit__upright { animation-play-state: paused; }
+
+.orbit__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--noir);
+  color: var(--blanc);
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 6vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.orbit__center i { font-style: normal; color: var(--accent); }
+
+@keyframes orbit-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 860px) {
+  .reseaux__grid { grid-template-columns: 1fr; }
+  .reseaux__text { max-width: none; }
+}
+
 .socials__foot {
   margin-top: 2.5rem;
   display: flex;
@@ -1079,6 +1248,105 @@ body.menu-open .nav__overlay a {
   text-transform: uppercase;
 }
 .booking__text { max-width: 46ch; color: var(--blanc-doux); }
+
+/* Deux parcours, une seule page de réservation */
+.book-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  width: 100%;
+  max-width: 720px;
+  background: var(--ligne);
+  border: 1px solid var(--ligne);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-align: left;
+}
+.book-choice { background: var(--noir-800); padding: clamp(1.3rem, 3vw, 2rem); }
+.book-choice__title {
+  font-size: var(--fs-small);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+.book-choice p { font-size: var(--fs-small); color: var(--blanc-doux); line-height: 1.55; }
+.booking__note { font-size: var(--fs-small); color: var(--blanc-faible); margin-top: -0.6rem; }
+.booking__contact { font-size: var(--fs-small); color: var(--blanc-faible); }
+.booking__contact a { color: var(--blanc); border-bottom: 1px solid var(--ligne-forte); }
+.booking__contact a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* CONFIANCE — crédibilité vérifiable + expériences clients ---------------- */
+.creds {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--ligne);
+  border: 1px solid var(--ligne);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.cred {
+  background: var(--noir-800);
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-height: 170px;
+}
+.cred__label {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blanc-faible);
+}
+.cred__value {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.cred .link-arrow { margin-top: auto; align-self: flex-start; }
+
+.stories { margin-top: clamp(3rem, 7vw, 5rem); }
+.stories[hidden] { display: none; }
+.stories__title {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blanc-faible);
+  margin-bottom: 1.4rem;
+}
+/* Mosaïque en colonnes : des avis de longueurs très différentes s'emboîtent sans
+   cartes étirées ni grands vides (une grille classique laissait des trous). */
+.stories__grid {
+  column-width: 290px;
+  column-gap: 1.2rem;
+}
+.stories__grid .story { break-inside: avoid; margin-bottom: 1.2rem; }
+.story {
+  background: var(--noir-800);
+  border: 1px solid var(--ligne);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2.2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.story__quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.45;
+  color: var(--blanc);
+}
+.story__who { display: flex; flex-direction: column; gap: 0.2rem; font-size: var(--fs-small); }
+.story__who span { color: var(--blanc-faible); }
+.story__consent { margin-top: auto; font-size: var(--fs-micro); color: var(--blanc-faible); letter-spacing: 0.04em; }
+.story__consent a { border-bottom: 1px solid var(--ligne-forte); transition: color 0.3s var(--ease), border-color 0.3s var(--ease); }
+.story__consent a:hover { color: var(--accent); border-color: var(--accent); }
+.stories__links { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.2rem 2.2rem; }
 
 /* FOOTER */
 .footer {
@@ -1166,6 +1434,17 @@ body.menu-open .nav__overlay a {
   overflow: hidden;
 }
 .modal__panel iframe { width: 100%; height: 100%; border: 0; }
+.modal__fallback {
+  position: absolute;
+  bottom: 1.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--fs-small);
+  color: var(--blanc-doux);
+  border-bottom: 1px solid var(--ligne-forte);
+  white-space: nowrap;
+}
+.modal__fallback:hover { color: var(--accent); border-color: var(--accent); }
 .modal__close {
   position: absolute;
   top: 0.8rem; right: 0.8rem;
@@ -1598,11 +1877,30 @@ body.menu-open .nav__overlay a {
   .footer__cols { grid-template-columns: 1fr 1fr; }
 }
 
-@media (max-width: 860px) {
-  :root { --nav-h: 66px; }
+/* Avec 8 entrées de menu, la barre horizontale n'a plus assez de place sous
+   ~1120 px : on passe au menu plein écran plus tôt que le reste de la mise en page. */
+@media (max-width: 1120px) {
   .nav__links { display: none; }
   .nav__toggle { display: block; }
+}
+.nav__links a { white-space: nowrap; }
+
+@media (max-width: 860px) {
+  :root { --nav-h: 66px; }
+  /* Hero mobile : photo pleine largeur en haut, texte ancré en bas par-dessus
+     un dégradé noir — le portrait reste visible sans gêner la lecture. */
+  .hero { align-items: flex-end; }
+  .hero__media img,
+  .hero__media video {
+    width: 100%; height: 82%; object-position: 50% 6%;
+    -webkit-mask-image: none; mask-image: none;
+  }
+  .hero__media::after {
+    background: linear-gradient(to top, var(--noir) 10%, rgba(10,10,11,0.82) 40%, rgba(10,10,11,0.12) 78%);
+  }
   .services__grid { grid-template-columns: 1fr; }
+  .creds, .book-choices { grid-template-columns: 1fr; }
+  .cred { min-height: 0; }
   .approach__body { margin-left: 0; }
   .omf__head { grid-template-columns: 1fr; }
   .about__meta { grid-template-columns: 1fr 1fr; }

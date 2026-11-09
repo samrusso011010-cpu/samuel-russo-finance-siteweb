@@ -14,11 +14,16 @@ window.SRF = window.SRF || {};
     var triggers = document.querySelectorAll('[data-booking]');
     if (!triggers.length) return;
 
+    // Le calendrier Microsoft Bookings n'accepte d'être intégré que depuis une
+    // page https (frame-ancestors https:) : en local (http://localhost) on
+    // retombe automatiquement sur l'ouverture dans un nouvel onglet.
+    var embed = cfg.mode === 'embed' && location.protocol === 'https:';
+
     // Applique l'URL/le libellé à tous les CTA de rendez-vous du site.
     triggers.forEach(function (t) {
       if (t.tagName === 'A') {
         t.setAttribute('href', cfg.url || '#');
-        if (cfg.mode !== 'embed') { t.setAttribute('target', '_blank'); t.setAttribute('rel', 'noopener'); }
+        if (!embed) { t.setAttribute('target', '_blank'); t.setAttribute('rel', 'noopener'); }
       }
       // Libellé : uniquement si la page n'est pas pilotée par i18n
       // (sinon SRF.i18n garde la maîtrise du texte, dans les deux langues).
@@ -28,13 +33,24 @@ window.SRF = window.SRF || {};
       }
     });
 
-    if (cfg.mode !== 'embed') return;
+    if (!embed) return;
 
     /* --- Mode modale --- */
     var modal = document.querySelector('[data-booking-modal]');
-    if (!modal) return;
+    if (!modal || modal.hasAttribute('data-booking-ready')) return; // idempotent
+    modal.setAttribute('data-booking-ready', '');
     var frame = modal.querySelector('iframe');
     var lastFocus = null;
+
+    // Lien de secours si le calendrier intégré ne s'affiche pas (bloqueur, réseau…).
+    var fb = document.createElement('a');
+    fb.className = 'modal__fallback';
+    fb.href = cfg.url;
+    fb.target = '_blank';
+    fb.rel = 'noopener';
+    fb.setAttribute('data-i18n', 'book.fallback');
+    fb.textContent = SRF.i18n ? SRF.i18n.t('book.fallback') : "Le calendrier ne s'affiche pas? Ouvrez-le dans un nouvel onglet →";
+    modal.appendChild(fb);
 
     function open(e) {
       if (e) e.preventDefault();

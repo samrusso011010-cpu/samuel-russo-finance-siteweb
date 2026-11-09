@@ -47,7 +47,8 @@ samuel-russo-finance/
 │       │   ├── concepts.js      Bibliothèque de concepts financiers
 │       │   ├── capsules.js      Capsules « 1 Minute Finance » (démo)
 │       │   ├── socials.js       Publications réseaux sociaux (démo)
-│       │   └── quiz.js          Questions + paliers du quiz « Ton score financier »
+│       │   ├── quiz.js          Questions + paliers du quiz (dormant — voir §7)
+│       │   └── testimonials.js  Expériences clients (vide tant qu'aucun accord écrit)
 │       └── modules/
 │           ├── nav.js           Navigation + menu mobile plein écran
 │           ├── animations.js    Reveal au scroll, parallax, compteurs
@@ -163,9 +164,15 @@ externe.
 Dans `config.js → booking` :
 - `url` : l'adresse de votre calendrier (**une seule fois, ici**).
 - `mode: 'newtab'` : ouvre le calendrier dans un nouvel onglet.
-- `mode: 'embed'` : ouvre le calendrier dans une fenêtre modale sur le site.
+- `mode: 'embed'` (actuel) : ouvre le calendrier dans une fenêtre modale sur le site —
+  le visiteur réserve sans le quitter. Microsoft Bookings accepte l'intégration depuis
+  toute page **https** ; sur `http://localhost` le site ouvre donc un nouvel onglet à la
+  place (normal). Un lien de secours « ouvrir dans un nouvel onglet » est affiché dans la
+  fenêtre. **À tester une fois le site en ligne** ; si ça ne convient pas, repasser à `'newtab'`.
 
 Tous les boutons « Prendre rendez-vous » du site utilisent automatiquement cette valeur.
+La section « Rendez-vous » explique les deux parcours (nouvelle personne / client actuel)
+et les deux types se choisissent sur la même page Microsoft Bookings.
 
 ---
 
@@ -216,7 +223,38 @@ Rien de tout cela n'est actif : la structure permet de l'ajouter proprement.
 
 ---
 
-## 12. Conformité — rappel
+## 12. Menu et sections (site déroulant)
+
+Le menu compte **8 entrées maximum, bouton compris** : À propos · Services · Confiance ·
+Concepts · Score financier · 1 Minute Finance · Réseaux · Prendre rendez-vous. Chaque
+entrée fait défiler la page jusqu'à sa section (« Score financier » ouvre l'outil externe).
+Sous ~1120 px de large, le menu devient le menu plein écran (hamburger).
+
+**Section Confiance (`#confiance`)** : affiche toujours les éléments vérifiables (inscription
+AMF + lien vers le registre, rattachement iA, titre). Les **expériences clients** viennent de
+`assets/js/data/testimonials.js` : 7 recommandations de la page Facebook (textes intacts,
+noms réduits à « Prénom I. », mention de la source et lien vers la page d'avis).
+Liens « Voir tous les avis » : `config.js → reviews` (Facebook renseigné ; ajouter l'adresse
+Google dans `reviews.google` pour afficher le lien Google). Un avis s'affiche si `publish: true`
+(Facebook/Google) ou `consent: true` (avis obtenu directement). Avant la mise en avant :
+validation par la conformité d'iA ; l'en-tête du fichier détaille la marche à suivre.
+
+**Vidéo d'ambiance (fond de la section Confiance)** : `assets/video/confiance-bg.mp4`
+(+ `.webm` en secours) et `confiance-poster.jpg` (image fixe). Boucle muette, voile noir à
+74 % pour garder le texte lisible, vidéo « collée » à l'écran pendant qu'on défile dans la
+section. Elle ne se charge et ne joue que lorsque la section est visible, et reste sur
+l'image fixe si le visiteur a demandé « réduire les animations » ou activé l'économie de
+données. Fichiers volontairement légers (≈ 2,9 Mo mp4 / 2,1 Mo webm, 720×1280, 11 s) : la
+vidéo originale (iPhone, 4K, 77 Mo) est trop lourde pour le web — **ne pas la mettre sur le
+site** (GitHub refuse aussi les envois par navigateur au-delà de 25 Mo par fichier). Pour la
+remplacer : même noms de fichiers, mêmes dimensions verticales, poids sous ~4 Mo, sans son.
+
+**Contenu de démo masqué** : `config.js → features` (`capsules`, `socialPosts`) à `false`
+tant que les vraies capsules / vraies publications n'existent pas.
+
+---
+
+## 13. Conformité — rappel
 
 Pas de promesse de rendement, pas de garantie, pas de faux témoignage, pas de
 faux chiffre de performance. Les numéros de permis / titres / certifications

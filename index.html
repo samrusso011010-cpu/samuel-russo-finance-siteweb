@@ -20,11 +20,14 @@
   <meta property="og:title" content="Samuel Russo Finance | Conseiller en sécurité financière">
   <meta property="og:description" content="Bâtir. Protéger. Faire croître.">
   <meta property="og:url" content="https://www.samuelrussofinance.ca/">
-  <meta property="og:image" content="https://www.samuelrussofinance.ca/assets/img/og-image.svg">
+  <meta property="og:image" content="https://www.samuelrussofinance.ca/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Samuel Russo, conseiller en sécurité financière — Bâtir. Protéger. Faire croître.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Samuel Russo Finance">
   <meta name="twitter:description" content="Bâtir. Protéger. Faire croître.">
-  <meta name="twitter:image" content="https://www.samuelrussofinance.ca/assets/img/og-image.svg">
+  <meta name="twitter:image" content="https://www.samuelrussofinance.ca/assets/img/og-image.jpg">
 
   <!-- Icônes -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -48,11 +51,18 @@
     "areaServed": "Québec, Canada",
     "availableLanguage": ["fr-CA", "en-CA"],
     "url": "https://www.samuelrussofinance.ca/",
-    "image": "https://www.samuelrussofinance.ca/assets/img/og-image.svg",
+    "image": "https://www.samuelrussofinance.ca/assets/img/og-image.jpg",
     "founder": { "@type": "Person", "name": "Samuel Russo", "jobTitle": "Conseiller en sécurité financière" },
     "parentOrganization": { "@type": "Organization", "name": "iA Groupe financier" },
     "knowsAbout": ["Planification financière", "Assurance vie", "REER", "CELI", "CELIAPP", "Retraite", "RRQ", "RREGOP"],
-    "slogan": "Bâtir. Protéger. Faire croître."
+    "slogan": "Bâtir. Protéger. Faire croître.",
+    "sameAs": [
+      "https://www.facebook.com/samuelrusso.finance",
+      "https://www.instagram.com/samuelrusso.finance/",
+      "https://ca.linkedin.com/in/samuel-russo-800089264",
+      "https://www.tiktok.com/@samuel..russo",
+      "https://www.youtube.com/@samuelrusso.finance"
+    ]
   }
   </script>
 </head>
@@ -73,6 +83,7 @@
       <nav class="nav__links" aria-label="Navigation">
         <a href="#a-propos" data-nav-link data-i18n="nav.about">À propos</a>
         <a href="#services" data-nav-link data-i18n="nav.services">Services</a>
+        <a href="#confiance" data-nav-link data-i18n="nav.trust">Confiance</a>
         <a href="#concepts" data-nav-link data-i18n="nav.concepts">Concepts</a>
         <a href="#" data-score data-i18n="nav.score">Score financier</a>
         <a href="#minute-finance" data-nav-link data-i18n="nav.minute">1 Minute Finance</a>
@@ -95,6 +106,7 @@
     <div class="nav__overlay" id="menu-mobile" role="dialog" aria-modal="true" aria-label="Menu">
       <a href="#a-propos" data-i18n="nav.about">À propos</a>
       <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#confiance" data-i18n="nav.trust">Confiance</a>
       <a href="#concepts" data-i18n="nav.concepts">Concepts</a>
       <a href="#" data-score data-i18n="nav.score">Score financier</a>
       <a href="#minute-finance" data-i18n="nav.minute">1 Minute Finance</a>
@@ -115,7 +127,7 @@
     <!-- ================= HERO ================= -->
     <section class="hero" id="accueil">
       <div class="hero__media" data-parallax="0.18">
-        <img src="assets/img/hero.svg" alt="" fetchpriority="high" width="1920" height="1200">
+        <img src="assets/img/portrait.jpg" alt="" fetchpriority="high" width="1200" height="1600">
       </div>
 
       <div class="hero__inner">
@@ -311,6 +323,56 @@
       </div>
     </div>
 
+    <!-- ================= CONFIANCE (crédibilité + expériences clients) ================= -->
+    <section class="section section--trust section--video" id="confiance">
+      <!-- Vidéo d'ambiance en boucle (muette). Fichiers : assets/video/confiance-bg.mp4 / .webm.
+           Lecture pilotée par animations.js : ne joue que lorsque la section est visible, reste
+           sur l'image fixe (poster) si « réduire les animations » ou économie de données. -->
+      <div class="trust__bg" aria-hidden="true">
+        <video class="trust__video" data-bg-video muted loop playsinline disablepictureinpicture
+               preload="none" poster="assets/video/confiance-poster.jpg" tabindex="-1">
+          <source src="assets/video/confiance-bg.mp4" type="video/mp4">
+          <source src="assets/video/confiance-bg.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="wrap trust__inner">
+        <div class="section-head section-head--wide">
+          <p class="overline" data-reveal data-i18n="trust.overline">Confiance</p>
+          <h2 data-reveal style="font-size:var(--fs-h2);text-transform:uppercase" data-i18n="trust.title">La confiance se vérifie.</h2>
+          <p class="lead" data-reveal data-trust-lead data-i18n="trust.lead">Mon inscription est publique et vérifiable en tout temps.</p>
+        </div>
+
+        <ul class="creds" data-stagger>
+          <li class="cred" data-reveal>
+            <span class="cred__label" data-i18n="trust.c1label">Inscription AMF</span>
+            <span class="cred__value" data-i18n="trust.c1value">N° 261755</span>
+            <a class="link-arrow" data-amf-link href="#" target="_blank" rel="noopener">
+              <span data-i18n="trust.c1link">Vérifier au registre de l'AMF</span> <span class="accent" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li class="cred" data-reveal>
+            <span class="cred__label" data-i18n="trust.c2label">Rattachement</span>
+            <span class="cred__value" data-i18n="trust.c2value">iA Groupe financier</span>
+          </li>
+          <li class="cred" data-reveal>
+            <span class="cred__label" data-i18n="trust.c3label">Titre professionnel</span>
+            <span class="cred__value" data-i18n="trust.c3value">Conseiller en sécurité financière</span>
+          </li>
+        </ul>
+
+        <!-- Rempli par render.js à partir de data/testimonials.js (vide = section absente) -->
+        <div class="stories" data-stories hidden>
+          <h3 class="stories__title" data-i18n="trust.storiesTitle">Expériences clients</h3>
+          <div class="stories__grid" data-stories-grid data-stagger></div>
+          <p class="stories__links">
+            <a class="link-arrow" data-review-link="google" href="#" target="_blank" rel="noopener">
+              <span data-i18n="trust.linkGoogle">Voir tous les avis sur Google</span> <span class="accent" aria-hidden="true">→</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- ================= CONCEPTS ================= -->
     <section class="section section--concepts" id="concepts">
       <div class="wrap">
@@ -392,25 +454,70 @@
     </section>
 
     <!-- ================= RÉSEAUX ================= -->
-    <section class="section section--social" id="reseaux">
-      <div class="wrap">
-        <div class="section-head section-head--wide">
+    <section class="section section--light section--white section--reseaux" id="reseaux">
+      <div class="wrap reseaux__grid">
+        <div class="reseaux__text">
           <p class="overline" data-reveal data-i18n="soc.overline">Réseaux</p>
-          <h2 data-reveal style="font-size:var(--fs-h2);text-transform:uppercase" data-i18n="soc.title">Ce qui se passe en ce moment.</h2>
+          <h2 data-reveal style="font-size:var(--fs-h2);text-transform:uppercase" data-i18n="soc.title">Où me suivre.</h2>
+          <p class="lead" data-reveal data-i18n="soc.lead">Des idées simples sur l'argent, là où vous êtes déjà.</p>
         </div>
 
-        <div class="socials__grid" data-socials-grid data-stagger></div>
+        <!-- Publications de démo : masquées tant que features.socialPosts = false -->
+        <div class="socials__grid" data-socials-grid data-stagger hidden></div>
 
-        <div class="socials__foot" data-reveal>
-          <div class="socials__links">
-            <a data-social="instagram" href="#">Instagram</a>
-            <a data-social="tiktok" href="#">TikTok</a>
-            <a data-social="facebook" href="#">Facebook</a>
-            <a data-social="linkedin" href="#">LinkedIn</a>
-            <a data-social="youtube" href="#">YouTube</a>
+        <!-- Orbite : les cinq réseaux tournent dans le sens horaire (une pause au survol) -->
+        <nav class="orbit" data-reveal="scale" aria-label="Réseaux sociaux" data-i18n-attr="aria-label:soc.aria">
+          <div class="orbit__ring">
+            <span class="orbit__track" aria-hidden="true"></span>
+
+            <a class="orbit__item" data-social="facebook" data-social-item href="#" aria-label="Facebook" style="--i:0">
+              <span class="orbit__upright">
+                <span class="orbit__badge orbit__badge--facebook">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.6 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.6V21z"/></svg>
+                </span>
+                <span class="orbit__label">Facebook</span>
+              </span>
+            </a>
+
+            <a class="orbit__item" data-social="instagram" data-social-item href="#" aria-label="Instagram" style="--i:1">
+              <span class="orbit__upright">
+                <span class="orbit__badge orbit__badge--instagram">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+                </span>
+                <span class="orbit__label">Instagram</span>
+              </span>
+            </a>
+
+            <a class="orbit__item" data-social="linkedin" data-social-item href="#" aria-label="LinkedIn" style="--i:2">
+              <span class="orbit__upright">
+                <span class="orbit__badge orbit__badge--linkedin">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3.5" y="9" width="3.6" height="11.5"/><circle cx="5.3" cy="5.3" r="2.1"/><path d="M10 9h3.4v1.6c.6-1 1.8-1.9 3.6-1.9 3.2 0 4 2.1 4 4.9v6.9h-3.6v-6c0-1.4-.3-2.4-1.7-2.4s-2.1 1-2.1 2.4v6H10z"/></svg>
+                </span>
+                <span class="orbit__label">LinkedIn</span>
+              </span>
+            </a>
+
+            <a class="orbit__item" data-social="tiktok" data-social-item href="#" aria-label="TikTok" style="--i:3">
+              <span class="orbit__upright">
+                <span class="orbit__badge orbit__badge--tiktok">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3.5v11a3.6 3.6 0 1 1-3.6-3.6"/><path d="M14 3.5c.3 2.4 1.9 4 4.6 4.2"/></svg>
+                </span>
+                <span class="orbit__label">TikTok</span>
+              </span>
+            </a>
+
+            <a class="orbit__item" data-social="youtube" data-social-item href="#" aria-label="YouTube" style="--i:4">
+              <span class="orbit__upright">
+                <span class="orbit__badge orbit__badge--youtube">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 7.6v8.8l7.4-4.4z"/></svg>
+                </span>
+                <span class="orbit__label">YouTube</span>
+              </span>
+            </a>
           </div>
-          <a class="btn btn--ghost" data-social="instagram" href="#"><span data-i18n="soc.follow">Suivre Samuel</span> <span class="btn__arrow" aria-hidden="true">→</span></a>
-        </div>
+
+          <div class="orbit__center" aria-hidden="true"><span>SR<i>.</i></span></div>
+        </nav>
       </div>
     </section>
 
@@ -422,12 +529,31 @@
         <p class="booking__text serif-quote" data-reveal data-i18n="book.text">
           « Vous n'avez pas besoin d'avoir toutes les réponses avant de prendre rendez-vous. »
         </p>
+
+        <div class="book-choices" data-stagger>
+          <div class="book-choice" data-reveal>
+            <h3 class="book-choice__title" data-i18n="book.newTitle">Première rencontre</h3>
+            <p data-i18n="book.newText">Faire connaissance et comprendre votre situation, vos questions et vos objectifs.</p>
+          </div>
+          <div class="book-choice" data-reveal>
+            <h3 class="book-choice__title" data-i18n="book.clientTitle">Client actuel</h3>
+            <p data-i18n="book.clientText">Rendez-vous de suivi : réviser votre stratégie, un changement de vie, une question.</p>
+          </div>
+        </div>
+
         <div class="cta-row" data-reveal style="justify-content:center">
           <a class="btn btn--accent btn--lg" href="#" data-booking data-booking-label>
             <span data-booking-text data-i18n="nav.book">Prendre rendez-vous</span>
             <span class="btn__arrow" aria-hidden="true">→</span>
           </a>
         </div>
+        <p class="booking__note" data-reveal data-i18n="book.choose">Vous choisissez le type de rendez-vous sur la page de réservation.</p>
+
+        <p class="booking__contact" data-reveal>
+          <span data-i18n="book.contactLine">Vous préférez parler à quelqu'un?</span>
+          <a data-phone data-phone-show href="#"></a> ·
+          <a data-email data-email-show href="#"></a>
+        </p>
       </div>
     </section>
   </main>
@@ -452,6 +578,7 @@
           <h4 data-i18n="footer.colExplore">Explorer</h4>
           <a href="#a-propos" data-i18n="nav.about">À propos</a>
           <a href="#services" data-i18n="nav.services">Services</a>
+          <a href="#confiance" data-i18n="nav.trust">Confiance</a>
           <a href="#concepts" data-i18n="nav.concepts">Concepts</a>
           <a href="#" data-score data-i18n="nav.score">Score financier</a>
           <a href="#minute-finance" data-i18n="nav.minute">1 Minute Finance</a>
@@ -498,6 +625,7 @@
   <script src="assets/js/data/concepts.js"></script>
   <script src="assets/js/data/capsules.js"></script>
   <script src="assets/js/data/socials.js"></script>
+  <script src="assets/js/data/testimonials.js"></script>
   <script src="assets/js/modules/animations.js" defer></script>
   <script src="assets/js/modules/nav.js" defer></script>
   <script src="assets/js/modules/render.js" defer></script>
