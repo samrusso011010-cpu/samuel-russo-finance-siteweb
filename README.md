@@ -112,6 +112,12 @@ Si vous remplacez `hero.svg` par un `.jpg`, pensez à changer l'extension dans
 
 ## 5. Ajouter un concept financier
 
+> **Section retirée de la page d'accueil (nov. 2026)** : « Comprendre son argent » était
+> trop longue. `data/concepts.js` n'est plus chargé par `index.html` et les pages
+> `pages/concepts/*.html` ne sont plus liées depuis l'accueil (elles restent dans
+> `sitemap.xml`). Pour réactiver : recréer une section `#concepts`, remettre le
+> `<script src="assets/js/data/concepts.js">` et le lien de menu.
+
 1. Ouvrir `assets/js/data/concepts.js`, copier un bloc, ajuster les champs.
    La grille de la page d'accueil se régénère automatiquement.
 2. (Optionnel) Créer la page dédiée : copier `pages/concepts/_TEMPLATE.html`
@@ -142,7 +148,7 @@ Le module `newsletter.js` contient déjà l'implémentation de chaque cas.
 
 ## 7. Le score financier
 
-Section `#score` (entre Concepts et 1 Minute Finance). Tous les liens « Score
+Section `#score` (entre Confiance et 1 Minute Finance). Tous les liens « Score
 financier » du site (nav, menu mobile, pied de page, bouton de la section) pointent
 vers l'outil externe défini dans `config.js → score.url` — une seule URL à changer
 pour tout le site, comme pour `booking.url`.
@@ -225,8 +231,8 @@ Rien de tout cela n'est actif : la structure permet de l'ajouter proprement.
 
 ## 12. Menu et sections (site déroulant)
 
-Le menu compte **8 entrées maximum, bouton compris** : À propos · Services · Confiance ·
-Concepts · Score financier · 1 Minute Finance · Réseaux · Prendre rendez-vous. Chaque
+Le menu compte **8 entrées maximum, bouton compris** (7 actuellement) : À propos · Services ·
+Confiance · Score financier · 1 Minute Finance · Réseaux · Prendre rendez-vous. Chaque
 entrée fait défiler la page jusqu'à sa section (« Score financier » ouvre l'outil externe).
 Sous ~1120 px de large, le menu devient le menu plein écran (hamburger).
 

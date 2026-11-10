@@ -84,7 +84,6 @@
         <a href="#a-propos" data-nav-link data-i18n="nav.about">À propos</a>
         <a href="#services" data-nav-link data-i18n="nav.services">Services</a>
         <a href="#confiance" data-nav-link data-i18n="nav.trust">Confiance</a>
-        <a href="#concepts" data-nav-link data-i18n="nav.concepts">Concepts</a>
         <a href="#" data-score data-i18n="nav.score">Score financier</a>
         <a href="#minute-finance" data-nav-link data-i18n="nav.minute">1 Minute Finance</a>
         <a href="#reseaux" data-nav-link data-i18n="nav.socials">Réseaux</a>
@@ -107,7 +106,6 @@
       <a href="#a-propos" data-i18n="nav.about">À propos</a>
       <a href="#services" data-i18n="nav.services">Services</a>
       <a href="#confiance" data-i18n="nav.trust">Confiance</a>
-      <a href="#concepts" data-i18n="nav.concepts">Concepts</a>
       <a href="#" data-score data-i18n="nav.score">Score financier</a>
       <a href="#minute-finance" data-i18n="nav.minute">1 Minute Finance</a>
       <a href="#reseaux" data-i18n="nav.socials">Réseaux</a>
@@ -232,9 +230,17 @@
             </div>
 
             <dl class="about__meta" data-stagger>
-              <div data-reveal>
+              <div data-reveal class="about__meta-wide">
                 <dt data-i18n="about.meta1dt">Champ d'action</dt>
-                <dd data-i18n="about.meta1dd">Protection · Investissement · Retraite</dd>
+                <dd data-i18n="about.meta1dd">Protection · Investissement · Retraite · Succession et héritage</dd>
+              </div>
+              <div data-reveal>
+                <dt data-i18n="about.metaYrsDt">Pratique</dt>
+                <dd data-i18n="about.metaYrsDd">4e année de pratique</dd>
+              </div>
+              <div data-reveal>
+                <dt data-i18n="about.metaEduDt">Formation</dt>
+                <dd data-i18n="about.metaEduDd">Diplôme collégial en comptabilité et gestion</dd>
               </div>
               <div data-reveal>
                 <dt data-i18n="about.meta2dt">Région</dt>
@@ -297,10 +303,6 @@
             <p style="color:var(--blanc-faible);font-size:var(--fs-small)" data-i18n="services.s4desc">Transformer une vie de travail en revenu durable.</p>
             <div class="service__foot"><a class="link-arrow" href="#rendez-vous" data-booking><span data-i18n="services.talk">Parlons-en</span> <span class="accent" aria-hidden="true">→</span></a></div>
           </article>
-        </div>
-
-        <div class="cta-row" data-reveal>
-          <a class="btn btn--ghost" href="#concepts"><span data-i18n="services.ctaConcepts">Explorer les concepts</span> <span class="btn__arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -373,32 +375,39 @@
       </div>
     </section>
 
-    <!-- ================= CONCEPTS ================= -->
-    <section class="section section--concepts" id="concepts">
-      <div class="wrap">
-        <div class="section-head section-head--wide">
-          <p class="overline" data-reveal data-i18n="concepts.overline">Concepts financiers</p>
-          <h2 class="split-words" data-reveal data-split-words style="font-size:var(--fs-h2);text-transform:uppercase" data-i18n="concepts.title">Comprendre son argent.</h2>
-          <p class="lead" data-reveal data-i18n="concepts.lead">Les concepts financiers expliqués simplement.</p>
-        </div>
-
-        <div class="concepts__filters" data-concepts-filters aria-label="Filtres"></div>
-        <div class="concepts__grid" data-concepts-grid data-stagger></div>
-
-        <noscript><p class="lead" style="margin-top:2rem" data-i18n="concepts.noscript">Activez JavaScript pour parcourir la bibliothèque de concepts.</p></noscript>
-      </div>
-    </section>
-
     <!-- ================= SCORE FINANCIER (QUIZ) ================= -->
     <section class="section section--light" id="score">
       <div class="wrap">
         <div class="section-head section-head--wide">
           <p class="overline" data-reveal data-i18n="quiz.overline">Ton score financier</p>
           <h2 data-reveal style="font-size:var(--fs-h2);text-transform:uppercase" data-i18n="quiz.title">Où en êtes-vous, vraiment?</h2>
-          <p class="lead" data-reveal data-i18n="quiz.lead">Six questions. Deux minutes. Un aperçu honnête de votre situation financière.</p>
+          <p class="lead" data-reveal data-i18n="quiz.lead">Un aperçu honnête de votre situation financière.</p>
         </div>
 
         <div class="quiz quiz--teaser" data-reveal="scale">
+          <!-- Cadran décoratif : l'aiguille balaie le cadran à l'apparition de la carte -->
+          <svg class="gauge" viewBox="0 0 200 132" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#D9645A"/>
+                <stop offset="0.5" stop-color="#C6A15B"/>
+                <stop offset="1" stop-color="#5FBF8A"/>
+              </linearGradient>
+            </defs>
+            <path class="gauge__track" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke-width="12" stroke-linecap="round"/>
+            <path class="gauge__arc" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round" pathLength="100"/>
+            <g class="gauge__ticks" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <line x1="100" y1="12" x2="100" y2="20"/>
+              <line x1="43.4" y1="35.4" x2="49" y2="41"/>
+              <line x1="156.6" y1="35.4" x2="151" y2="41"/>
+            </g>
+            <g class="gauge__needle">
+              <line x1="100" y1="100" x2="100" y2="34" stroke="#F4F1EA" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="100" cy="100" r="9" fill="#F4F1EA"/>
+              <circle cx="100" cy="100" r="3.5" fill="#0A0A0B"/>
+            </g>
+            <text class="gauge__label" x="100" y="128" text-anchor="middle">/ 100</text>
+          </svg>
           <p data-i18n="quiz.teaserText">Répondez à quelques questions simples et obtenez votre score sur 100, avec des pistes concrètes pour avancer.</p>
           <div class="cta-row">
             <a class="btn btn--accent btn--lg" data-score href="#" target="_blank" rel="noopener">
@@ -457,7 +466,6 @@
     <section class="section section--light section--white section--reseaux" id="reseaux">
       <div class="wrap reseaux__grid">
         <div class="reseaux__text">
-          <p class="overline" data-reveal data-i18n="soc.overline">Réseaux</p>
           <h2 data-reveal style="font-size:var(--fs-h2);text-transform:uppercase" data-i18n="soc.title">Où me suivre.</h2>
           <p class="lead" data-reveal data-i18n="soc.lead">Des idées simples sur l'argent, là où vous êtes déjà.</p>
         </div>
@@ -579,7 +587,6 @@
           <a href="#a-propos" data-i18n="nav.about">À propos</a>
           <a href="#services" data-i18n="nav.services">Services</a>
           <a href="#confiance" data-i18n="nav.trust">Confiance</a>
-          <a href="#concepts" data-i18n="nav.concepts">Concepts</a>
           <a href="#" data-score data-i18n="nav.score">Score financier</a>
           <a href="#minute-finance" data-i18n="nav.minute">1 Minute Finance</a>
           <a href="#reseaux" data-i18n="nav.socials">Réseaux</a>
@@ -622,7 +629,6 @@
   <!-- ================= SCRIPTS ================= -->
   <script src="assets/js/config.js"></script>
   <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/data/concepts.js"></script>
   <script src="assets/js/data/capsules.js"></script>
   <script src="assets/js/data/socials.js"></script>
   <script src="assets/js/data/testimonials.js"></script>

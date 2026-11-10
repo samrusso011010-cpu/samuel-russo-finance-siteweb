@@ -197,6 +197,84 @@ window.SRF = window.SRF || {};
     });
   }
 
+  /* --- Cadran du score (section « Ton score financier ») ---------------- */
+  // L'aiguille balaie le cadran de gauche à droite pour attirer l'œil ; le
+  // visiteur peut la prendre (souris ou doigt) : elle suit alors le pointeur,
+  // puis reprend son balayage quand il la lâche. Décoratif : aucun vrai score.
+  function initGauge() {
+    var svg = document.querySelector('.gauge');
+    if (!svg) return;
+    var needle = svg.querySelector('.gauge__needle');
+    var arc = svg.querySelector('.gauge__arc');
+    var label = svg.querySelector('.gauge__label');
+    var MAX = 90;             // amplitude max de l'aiguille (degrés, 0 = vertical)
+    var angle = -MAX, target = 0, dragging = false, resumeAt = 0, raf = 0, t0 = 0;
+    var running = false;
+
+    function paint() {
+      var a = Math.max(-MAX, Math.min(MAX, angle));
+      var pct = (a + MAX) / (2 * MAX);
+      needle.style.transform = 'rotate(' + a.toFixed(2) + 'deg)';
+      arc.style.strokeDashoffset = (100 - pct * 100).toFixed(2);
+      if (label) label.textContent = Math.round(pct * 100) + ' / 100';
+    }
+
+    function tick(now) {
+      if (!t0) t0 = now;
+      if (!dragging && now >= resumeAt) {
+        // balayage doux : sinusoïde, période ~5 s
+        target = Math.sin((now - t0) / 800) * (MAX - 8);
+      }
+      angle += (target - angle) * (dragging ? 0.35 : 0.08);
+      paint();
+      raf = running ? requestAnimationFrame(tick) : 0;
+    }
+
+    function start() { if (running || reduced) return; running = true; t0 = 0; raf = requestAnimationFrame(tick); }
+    function stop() { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
+
+    function pointTo(e) {
+      var r = svg.getBoundingClientRect();
+      // pivot = (100,100) dans le viewBox 200×132
+      var px = r.left + r.width * 0.5, py = r.top + r.height * (100 / 132);
+      var a = Math.atan2(e.clientX - px, py - e.clientY) * 180 / Math.PI;
+      target = Math.max(-MAX, Math.min(MAX, a));
+    }
+
+    svg.addEventListener('pointerdown', function (e) {
+      dragging = true; svg.classList.add('is-grabbing');
+      try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+      pointTo(e);
+      if (reduced && !running) { running = true; raf = requestAnimationFrame(tick); }
+    });
+    svg.addEventListener('pointermove', function (e) {
+      // souris : l'aiguille suit le survol ; doigt : seulement pendant le glissement
+      if (dragging || e.pointerType === 'mouse') {
+        pointTo(e);
+        resumeAt = performance.now() + 1500;
+        if (reduced && !running) { running = true; raf = requestAnimationFrame(tick); setTimeout(function () { if (!dragging) stop(); }, 1600); }
+      }
+    });
+    function release() {
+      if (!dragging) return;
+      dragging = false; svg.classList.remove('is-grabbing');
+      resumeAt = performance.now() + 1800;
+      if (reduced) setTimeout(stop, 900);
+    }
+    svg.addEventListener('pointerup', release);
+    svg.addEventListener('pointercancel', release);
+
+    // Remise en route / arrêt selon la visibilité (pas d'animation hors écran)
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) start(); else stop(); });
+      }, { threshold: 0.3 }).observe(svg);
+    } else { start(); }
+
+    angle = reduced ? 40 : -MAX; target = reduced ? 40 : angle;
+    paint();
+  }
+
   /* --- Horloge « 1 Minute Finance » ----------------------------------- */
   // Compte de 00:00 à 01:00 à l'entrée dans le viewport — un clin d'œil au
   // concept de la marque plutôt qu'un chiffre statique.
@@ -272,6 +350,7 @@ window.SRF = window.SRF || {};
       initScrollProgress();
       initMagnetic();
       initBgVideo();
+      initGauge();
       initClock();
       initCounters();
     },
