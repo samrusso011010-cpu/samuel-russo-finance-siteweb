@@ -96,7 +96,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  overflow-x: clip; /* clip ne crée pas de conteneur de défilement : sticky reste fonctionnel */
 }
+/* Sur mobile, le moindre élément qui dépasse à droite (éléments qui glissent à l'apparition,
+   anneau qui tourne dans Réseaux…) élargit la page : on voit alors une barre noire et la
+   page se décale à gauche. On coupe donc tout débordement horizontal à la racine. */
+html { overflow-x: hidden; overflow-x: clip; }
 
 img, svg, video { display: block; max-width: 100%; height: auto; }
 picture { display: contents; }
@@ -182,6 +187,7 @@ h1, h2, h3, h4 {
   position: relative;
   padding-block: var(--space-section);
   z-index: 2;
+  overflow-x: clip; /* les éléments qui glissent/tournent ne doivent jamais élargir la page */
 }
 .section--tight { padding-block: clamp(3.5rem, 8vw, 7rem); }
 .section--dark { background: var(--noir-800); }
