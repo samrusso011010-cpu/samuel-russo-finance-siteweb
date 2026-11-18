@@ -83,9 +83,10 @@ window.SRF.config = {
      provider : 'none' | 'mailchimp' | 'convertkit' | 'gohighlevel' | 'custom'
      ------------------------------------------------------------------------- */
   newsletter: {
-    provider: 'none',
-    // Utilisé par les providers de type POST (mailchimp, convertkit, custom, gohighlevel)
-    endpoint: '',
+    // 'ghl' = GoHighLevel via la fonction serveur api/subscribe.js (clé côté Vercel).
+    provider: 'ghl',
+    // Utilisé par les providers de type POST (ghl, mailchimp, convertkit, custom, gohighlevel)
+    endpoint: '/api/subscribe',
     // Champ caché anti-bot / clés spécifiques au provider
     hiddenFields: {},
     // Message affiché après une inscription réussie

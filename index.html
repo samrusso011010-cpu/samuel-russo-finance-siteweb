@@ -455,10 +455,13 @@
           <label class="sr-only" for="nl-email" data-i18n="nl.placeholder">Votre adresse courriel</label>
           <input type="email" id="nl-email" name="email" placeholder="Votre adresse courriel"
                  autocomplete="email" required data-i18n-attr="placeholder:nl.placeholder">
+          <!-- Piège à robots : invisible pour les humains, ne pas remplir -->
+          <input type="text" name="nl_hp" tabindex="-1" autocomplete="off" aria-hidden="true"
+                 style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
           <button type="submit" class="btn btn--accent" data-i18n="nl.submit">Je m'inscris</button>
         </form>
         <p class="newsletter__status" data-newsletter-status role="status" aria-live="polite"></p>
-        <p class="newsletter__note" data-i18n="nl.note">Désinscription en un clic. Aucune sollicitation, aucun partage de votre adresse.</p>
+        <p class="newsletter__note" data-i18n="nl.note">En vous inscrivant, vous acceptez de recevoir l'infolettre 1 Minute Finance de Samuel Russo. Désinscription en un clic, en tout temps. Votre adresse n'est jamais partagée.</p>
       </div>
     </section>
 
@@ -608,7 +611,7 @@
           <span data-cfg="compliance.permitInfo">Titre professionnel et numéro de certificat.</span>
           <a data-amf-link href="#" target="_blank" rel="noopener" data-i18n="footer.verify">Vérifier l'inscription au registre de l'AMF →</a>
         </p>
-        <p data-i18n="footer.legalLinks">Mentions légales · Politique de confidentialité · Conditions d'utilisation — placeholders, à compléter.</p>
+        <p data-i18n="footer.legalLinks">Mentions légales · Politique de confidentialité · Conditions d'utilisation</p>
       </div>
 
       <div class="footer__bottom">

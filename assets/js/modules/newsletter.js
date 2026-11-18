@@ -22,6 +22,22 @@ window.SRF = window.SRF || {};
       return Promise.resolve({ ok: true, demo: true });
     },
 
+    // GoHighLevel via la fonction serveur /api/subscribe (voir api/subscribe.js).
+    // La clé GoHighLevel reste côté serveur. Le succès n'est affiché que si le
+    // serveur confirme réellement l'inscription.
+    ghl: function (email, cfg, extra) {
+      return fetch(cfg.endpoint || '/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          lang: extra && extra.lang,
+          website: extra && extra.website,   // piège à robots (champ caché, doit rester vide)
+          elapsed: extra && extra.elapsed
+        })
+      }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok && j.ok === true }; }); });
+    },
+
     custom: function (email, cfg) {
       return fetch(cfg.endpoint, {
         method: 'POST',
@@ -68,6 +84,8 @@ window.SRF = window.SRF || {};
     var status = section.querySelector('[data-newsletter-status]');
     var cfg = (SRF.config && SRF.config.newsletter) || { provider: 'none' };
     var handler = providers[cfg.provider] || providers.none;
+    var openedAt = Date.now();
+    var honeypot = form.querySelector('input[name="nl_hp"]');
 
     function msgFor(kind) {
       // priorité : i18n (bilingue) > config > défaut
@@ -100,7 +118,13 @@ window.SRF = window.SRF || {};
       if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = '…'; }
       say('');
 
-      Promise.resolve(handler(email, cfg))
+      var extra = {
+        lang: ((SRF.i18n && SRF.i18n._lang) || document.documentElement.lang || 'fr').slice(0, 2),
+        website: honeypot ? honeypot.value : '',
+        elapsed: Date.now() - openedAt
+      };
+
+      Promise.resolve(handler(email, cfg, extra))
         .then(function (res) {
           if (res && res.ok) {
             say(msgFor('ok'), 'ok');

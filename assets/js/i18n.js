@@ -140,7 +140,7 @@ window.SRF.i18n = {
       'nl.lead': 'Une fois par semaine. Une minute. Une idée qui peut changer votre façon de gérer votre argent.',
       'nl.placeholder': 'Votre adresse courriel',
       'nl.submit': "Je m'inscris",
-      'nl.note': "Désinscription en un clic. Aucune sollicitation, aucun partage de votre adresse.",
+      'nl.note': "En vous inscrivant, vous acceptez de recevoir l'infolettre 1 Minute Finance de Samuel Russo. Désinscription en un clic, en tout temps. Votre adresse n'est jamais partagée.",
       'nl.invalid': 'Entrez une adresse courriel valide.',
       'nl.success': 'Merci. Vérifiez votre boîte de réception : la prochaine idée arrive bientôt.',
       'nl.error': 'Un problème est survenu. Réessayez dans un instant.',
@@ -171,7 +171,7 @@ window.SRF.i18n = {
       'footer.phone': 'Téléphoner',
       'footer.regLabel': 'Renseignements réglementaires —',
       'footer.verify': "Vérifier l'inscription au registre de l'AMF →",
-      'footer.legalLinks': "Mentions légales · Politique de confidentialité · Conditions d'utilisation — placeholders, à compléter.",
+      'footer.legalLinks': "Mentions légales · Politique de confidentialité · Conditions d'utilisation",
       'footer.bottomNote': 'Conçu comme une marque, pas comme une brochure.',
 
       'crumb.home': 'Accueil'
@@ -296,7 +296,7 @@ window.SRF.i18n = {
       'nl.lead': 'Once a week. One minute. One idea that can change how you manage your money.',
       'nl.placeholder': 'Your email address',
       'nl.submit': 'Subscribe',
-      'nl.note': 'One-click unsubscribe. No spam, your address is never shared.',
+      'nl.note': 'By subscribing, you agree to receive the 1 Minute Finance newsletter from Samuel Russo. One-click unsubscribe, any time. Your address is never shared.',
       'nl.invalid': 'Enter a valid email address.',
       'nl.success': 'Thank you. Check your inbox — the next idea is on its way.',
       'nl.error': 'Something went wrong. Please try again in a moment.',
@@ -327,7 +327,7 @@ window.SRF.i18n = {
       'footer.phone': 'Call',
       'footer.regLabel': 'Regulatory information —',
       'footer.verify': 'Verify the registration in the AMF register →',
-      'footer.legalLinks': 'Legal notice · Privacy policy · Terms of use — placeholders, to be completed.',
+      'footer.legalLinks': 'Legal notice · Privacy policy · Terms of use',
       'footer.bottomNote': 'Designed as a brand, not a brochure.',
 
       'crumb.home': 'Home'
