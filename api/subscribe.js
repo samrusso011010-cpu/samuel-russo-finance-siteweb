@@ -3,8 +3,8 @@
    -----------------------------------------------------------------------------
    Fonction serveur Vercel (Node). Le formulaire du site (assets/js/modules/
    newsletter.js, provider « ghl ») envoie ici { email, lang, website, elapsed }.
-   On crée (ou met à jour) le contact dans GoHighLevel avec l'étiquette
-   « infolettre » : c'est l'ajout de cette étiquette qui déclenche, côté
+   On crée (ou met à jour) le contact dans GoHighLevel avec la balise
+   « membre une minute finance » : c'est l'ajout de cette étiquette qui déclenche, côté
    GoHighLevel, le workflow du courriel de bienvenue (déclencheur gratuit
    « Étiquette ajoutée », contrairement au webhook entrant, qui est premium).
 
@@ -26,7 +26,9 @@ var ALLOWED_ORIGINS = [
 
 var GHL_URL = 'https://services.leadconnectorhq.com/contacts/upsert';
 var GHL_VERSION = '2021-07-28';
-var TAG_MAIN = 'infolettre';
+// Balise principale des abonnés : celle qui déclenche le workflow de bienvenue dans GoHighLevel.
+// Modifiable sans toucher au code via la variable Vercel GHL_TAG.
+var TAG_MAIN = (process.env.GHL_TAG || 'membre une minute finance').trim();
 
 // Limite simple par adresse IP (meilleur effort : la mémoire est propre à chaque instance)
 var hits = new Map();
