@@ -84,7 +84,8 @@ module.exports = async function handler(req, res) {
   var token = process.env.GHL_TOKEN;
   var locationId = process.env.GHL_LOCATION_ID;
   if (!token || !locationId) {
-    return res.status(500).json({ ok: false, error: 'config' });
+    // DIAGNOSTIC TEMPORAIRE : indique le nom de la variable manquante (jamais sa valeur)
+    return res.status(500).json({ ok: false, error: 'config', missing: [!token ? 'GHL_TOKEN' : null, !locationId ? 'GHL_LOCATION_ID' : null].filter(Boolean) });
   }
 
   var lang = body.lang === 'en' ? 'en' : 'fr';
